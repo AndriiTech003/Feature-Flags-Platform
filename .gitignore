@@ -1,0 +1,12 @@
+node_modules
+dist
+.turbo
+coverage
+*.tgz
+.env
+test-results
+playwright-report
+.smoke
+bench-results.json
+apps/dashboard/dist-e2e
+docs-site

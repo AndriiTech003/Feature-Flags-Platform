@@ -1,0 +1,48 @@
+{
+  "name": "feature-flags-platform",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.6",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "turbo run dev --filter='./apps/*'",
+    "build": "turbo run build",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:browser": "turbo run test:browser",
+    "test:integration": "turbo run test:integration --concurrency=1",
+    "test:coverage:api": "pnpm --filter @ffp/api test:coverage",
+    "test:e2e": "playwright test -c e2e/playwright.config.ts",
+    "bench": "pnpm --filter @ashamrai/flags-evaluator bench",
+    "size": "turbo run size",
+    "publint": "turbo run publint",
+    "attw": "turbo run attw",
+    "pack:check": "node scripts/pack-check.mjs",
+    "db:migrate": "pnpm --filter @ffp/api db:migrate",
+    "seed": "pnpm --filter @ffp/api seed",
+    "traffic": "pnpm --filter @ffp/demo-shop traffic",
+    "loadtest": "node scripts/loadtest.mjs",
+    "smoke": "bash scripts/smoke.sh",
+    "docs:api": "typedoc"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "1.63.0",
+    "@types/node": "^24.0.0",
+    "eslint": "^10.11.0",
+    "eslint-plugin-react-hooks": "^7.0.0",
+    "globals": "^16.0.0",
+    "pg": "^8.23.1",
+    "prettier": "^3.9.9",
+    "turbo": "^2.11.6",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.71.0",
+    "undici": "^8.11.2",
+    "typedoc": "^0.28.20"
+  }
+}

@@ -1,0 +1,959 @@
+{
+  "name": "rollouts",
+  "description": "Percentage rollouts with precomputed buckets (murmurhash3_x86_32, UTF-8, salt), experiments and bucketBy",
+  "flags": [
+    {
+      "key": "rollout-30",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "a1b2c3",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "rollout": {
+            "weights": [
+              {
+                "variation": "on",
+                "weight": 30000
+              },
+              {
+                "variation": "off",
+                "weight": 70000
+              }
+            ]
+          }
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "rollout-org",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "org-salt",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "rollout": {
+            "contextKind": "organization",
+            "weights": [
+              {
+                "variation": "on",
+                "weight": 30000
+              },
+              {
+                "variation": "off",
+                "weight": 70000
+              }
+            ]
+          }
+        },
+        "version": 1,
+        "experiment": {
+          "id": "exp-1"
+        }
+      }
+    },
+    {
+      "key": "rollout-by-attr",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "attr-salt",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "rollout": {
+            "bucketBy": "accountId",
+            "weights": [
+              {
+                "variation": "on",
+                "weight": 50000
+              },
+              {
+                "variation": "off",
+                "weight": 50000
+              }
+            ]
+          }
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "rollout-all-on",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "s",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "rollout": {
+            "weights": [
+              {
+                "variation": "on",
+                "weight": 100000
+              },
+              {
+                "variation": "off",
+                "weight": 0
+              }
+            ]
+          }
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "rollout-all-off",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "s",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "rollout": {
+            "weights": [
+              {
+                "variation": "on",
+                "weight": 0
+              },
+              {
+                "variation": "off",
+                "weight": 100000
+              }
+            ]
+          }
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "rollout-short",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "s",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "rollout": {
+            "weights": [
+              {
+                "variation": "on",
+                "weight": 0
+              },
+              {
+                "variation": "off",
+                "weight": 10
+              }
+            ]
+          }
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "banner-text",
+      "kind": "string",
+      "variations": [
+        {
+          "id": "A",
+          "value": "Welcome"
+        },
+        {
+          "id": "B",
+          "value": "Big summer sale"
+        },
+        {
+          "id": "C",
+          "value": "Free shipping today"
+        }
+      ],
+      "salt": "banner-salt",
+      "config": {
+        "on": true,
+        "offVariation": "C",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "rollout": {
+            "weights": [
+              {
+                "variation": "A",
+                "weight": 33333
+              },
+              {
+                "variation": "B",
+                "weight": 33333
+              },
+              {
+                "variation": "C",
+                "weight": 33334
+              }
+            ]
+          }
+        },
+        "version": 1,
+        "experiment": {
+          "id": "exp-banner"
+        }
+      }
+    },
+    {
+      "key": "rule-rollout",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "rr-salt",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "pro-50",
+            "clauses": [
+              {
+                "attribute": "plan",
+                "op": "eq",
+                "values": [
+                  "pro"
+                ]
+              }
+            ],
+            "serve": {
+              "rollout": {
+                "weights": [
+                  {
+                    "variation": "on",
+                    "weight": 50000
+                  },
+                  {
+                    "variation": "off",
+                    "weight": 50000
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1,
+        "experiment": {
+          "id": "exp-rule"
+        }
+      }
+    }
+  ],
+  "segments": [],
+  "cases": [
+    {
+      "name": "30/70 rollout for u1 (bucket 87276)",
+      "flagKey": "rollout-30",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "30/70 rollout for u2 (bucket 43974)",
+      "flagKey": "rollout-30",
+      "context": {
+        "kind": "user",
+        "key": "u2"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "30/70 rollout for u3 (bucket 11765)",
+      "flagKey": "rollout-30",
+      "context": {
+        "kind": "user",
+        "key": "u3"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "30/70 rollout for user-42 (bucket 56097)",
+      "flagKey": "rollout-30",
+      "context": {
+        "kind": "user",
+        "key": "user-42"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "30/70 rollout for user-1000 (bucket 46680)",
+      "flagKey": "rollout-30",
+      "context": {
+        "kind": "user",
+        "key": "user-1000"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "30/70 rollout for Ωmega (bucket 72947)",
+      "flagKey": "rollout-30",
+      "context": {
+        "kind": "user",
+        "key": "Ωmega"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "30/70 rollout for x (bucket 41416)",
+      "flagKey": "rollout-30",
+      "context": {
+        "kind": "user",
+        "key": "x"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "percentage rollout 30/70 by organization acme (bucket 98791)",
+      "flagKey": "rollout-org",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "u1"
+        },
+        "organization": {
+          "key": "acme"
+        }
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "percentage rollout 30/70 by organization globex (bucket 41824)",
+      "flagKey": "rollout-org",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "u1"
+        },
+        "organization": {
+          "key": "globex"
+        }
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "percentage rollout 30/70 by organization initech (bucket 13839)",
+      "flagKey": "rollout-org",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "u1"
+        },
+        "organization": {
+          "key": "initech"
+        }
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "percentage rollout 30/70 by organization umbrella (bucket 25627)",
+      "flagKey": "rollout-org",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "u1"
+        },
+        "organization": {
+          "key": "umbrella"
+        }
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "organization rollout without organization context uses bucket 0 and is not in experiment",
+      "flagKey": "rollout-org",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "all users of the same organization get the same variation (u1)",
+      "flagKey": "rollout-org",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "u1"
+        },
+        "organization": {
+          "key": "acme"
+        }
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "all users of the same organization get the same variation (u2)",
+      "flagKey": "rollout-org",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "u2"
+        },
+        "organization": {
+          "key": "acme"
+        }
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "all users of the same organization get the same variation (u3)",
+      "flagKey": "rollout-org",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "u3"
+        },
+        "organization": {
+          "key": "acme"
+        }
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "bucketBy attribute acct-9 for u1 (bucket 99409)",
+      "flagKey": "rollout-by-attr",
+      "context": {
+        "kind": "user",
+        "key": "u1",
+        "accountId": "acct-9"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "bucketBy attribute acct-9 for u2 (bucket 99409)",
+      "flagKey": "rollout-by-attr",
+      "context": {
+        "kind": "user",
+        "key": "u2",
+        "accountId": "acct-9"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "bucketBy attribute acct-17 for u3 (bucket 6228)",
+      "flagKey": "rollout-by-attr",
+      "context": {
+        "kind": "user",
+        "key": "u3",
+        "accountId": "acct-17"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "integer bucketBy attribute is stringified (bucket 94198)",
+      "flagKey": "rollout-by-attr",
+      "context": {
+        "kind": "user",
+        "key": "u9",
+        "accountId": 12345
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "missing bucketBy attribute uses bucket 0",
+      "flagKey": "rollout-by-attr",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "non integer bucketBy attribute uses bucket 0",
+      "flagKey": "rollout-by-attr",
+      "context": {
+        "kind": "user",
+        "key": "u1",
+        "accountId": 1.5
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "100/0 rollout always first",
+      "flagKey": "rollout-all-on",
+      "context": {
+        "kind": "user",
+        "key": "anyone"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "0/100 rollout always second",
+      "flagKey": "rollout-all-off",
+      "context": {
+        "kind": "user",
+        "key": "anyone"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "weights summing below 100000 fall into last variation (bucket 34974)",
+      "flagKey": "rollout-short",
+      "context": {
+        "kind": "user",
+        "key": "someone"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "three way experiment split for visitor-1 (bucket 62000)",
+      "flagKey": "banner-text",
+      "context": {
+        "kind": "user",
+        "key": "visitor-1"
+      },
+      "default": "x",
+      "expect": {
+        "value": "Big summer sale",
+        "variationId": "B",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "three way experiment split for visitor-2 (bucket 42838)",
+      "flagKey": "banner-text",
+      "context": {
+        "kind": "user",
+        "key": "visitor-2"
+      },
+      "default": "x",
+      "expect": {
+        "value": "Big summer sale",
+        "variationId": "B",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "three way experiment split for visitor-3 (bucket 92983)",
+      "flagKey": "banner-text",
+      "context": {
+        "kind": "user",
+        "key": "visitor-3"
+      },
+      "default": "x",
+      "expect": {
+        "value": "Free shipping today",
+        "variationId": "C",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "three way experiment split for visitor-4 (bucket 55205)",
+      "flagKey": "banner-text",
+      "context": {
+        "kind": "user",
+        "key": "visitor-4"
+      },
+      "default": "x",
+      "expect": {
+        "value": "Big summer sale",
+        "variationId": "B",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "three way experiment split for visitor-5 (bucket 79727)",
+      "flagKey": "banner-text",
+      "context": {
+        "kind": "user",
+        "key": "visitor-5"
+      },
+      "default": "x",
+      "expect": {
+        "value": "Free shipping today",
+        "variationId": "C",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "three way experiment split for 用户 (bucket 32606)",
+      "flagKey": "banner-text",
+      "context": {
+        "kind": "user",
+        "key": "用户"
+      },
+      "default": "x",
+      "expect": {
+        "value": "Welcome",
+        "variationId": "A",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "three way experiment split for 🙂-emoji (bucket 55375)",
+      "flagKey": "banner-text",
+      "context": {
+        "kind": "user",
+        "key": "🙂-emoji"
+      },
+      "default": "x",
+      "expect": {
+        "value": "Big summer sale",
+        "variationId": "B",
+        "reason": {
+          "kind": "FALLTHROUGH",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "rollout inside rule for p1 is in experiment (bucket 88500)",
+      "flagKey": "rule-rollout",
+      "context": {
+        "kind": "user",
+        "key": "p1",
+        "plan": "pro"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "pro-50",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "rollout inside rule for p2 is in experiment (bucket 54654)",
+      "flagKey": "rule-rollout",
+      "context": {
+        "kind": "user",
+        "key": "p2",
+        "plan": "pro"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "pro-50",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "rollout inside rule for p3 is in experiment (bucket 5243)",
+      "flagKey": "rule-rollout",
+      "context": {
+        "kind": "user",
+        "key": "p3",
+        "plan": "pro"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "pro-50",
+          "inExperiment": true
+        }
+      }
+    },
+    {
+      "name": "fixed variation serve is never in experiment",
+      "flagKey": "rule-rollout",
+      "context": {
+        "kind": "user",
+        "key": "p1",
+        "plan": "free"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    }
+  ]
+}

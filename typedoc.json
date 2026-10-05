@@ -1,0 +1,24 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "Feature Flags Platform SDKs",
+  "entryPointStrategy": "packages",
+  "entryPoints": [
+    "packages/evaluator",
+    "packages/sdk-node",
+    "packages/sdk-node-redis",
+    "packages/sdk-web",
+    "packages/sdk-react",
+    "packages/openfeature-node",
+    "packages/openfeature-web",
+    "packages/contracts",
+    "packages/cli"
+  ],
+  "packageOptions": {
+    "entryPoints": ["src/index.ts", "src/index.tsx"],
+    "includeVersion": true,
+    "excludeExternals": true
+  },
+  "out": "docs-site",
+  "readme": "README.public.md",
+  "skipErrorChecking": true
+}

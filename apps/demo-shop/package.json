@@ -1,0 +1,25 @@
+{
+  "name": "@ffp/demo-shop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch --onSuccess \"node dist/server.js\"",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "traffic": "tsx src/traffic.ts"
+  },
+  "dependencies": {
+    "@ashamrai/flags-node": "workspace:*",
+    "@ashamrai/flags-web": "workspace:*",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "tsup": "^8.5.1",
+    "tsx": "^4.23.15",
+    "vitest": "5.0.3"
+  }
+}

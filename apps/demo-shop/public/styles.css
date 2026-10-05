@@ -1,0 +1,245 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+  background: #f7f7fb;
+  color: #1f2333;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+  background: #fff;
+  border-bottom: 1px solid #e6e7ef;
+}
+.brand {
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.logo {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #4f46e5;
+  color: #fff;
+  font-size: 12px;
+}
+.user {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  color: #555b72;
+}
+select,
+button {
+  font: inherit;
+}
+select {
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid #d9dbe7;
+  background: #fff;
+}
+.banner {
+  margin: 18px 28px 0;
+  padding: 18px 22px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  padding: 8px 28px 40px;
+}
+h2 {
+  font-size: 16px;
+  margin: 22px 0 12px;
+}
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 14px;
+}
+.product {
+  background: #fff;
+  border: 1px solid #e6e7ef;
+  border-radius: 14px;
+  padding: 16px;
+}
+.product h3 {
+  font-size: 14px;
+  margin: 10px 0 4px;
+}
+.product p {
+  margin: 0 0 12px;
+  color: #555b72;
+}
+.badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: #eef0ff;
+  color: #4f46e5;
+  font-weight: 700;
+}
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 9px;
+  padding: 8px 12px;
+  background: #4f46e5;
+  color: #fff;
+  font-weight: 600;
+}
+button:hover {
+  background: #4338ca;
+}
+.pricing.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 1fr);
+  gap: 12px;
+}
+.pricing.list {
+  display: grid;
+  gap: 8px;
+}
+.plan {
+  background: #fff;
+  border: 1px solid #e6e7ef;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+.pricing.grid .plan {
+  flex-direction: column;
+  gap: 6px;
+}
+.plan.highlight {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px #e0e7ff;
+}
+.cart,
+.debug {
+  background: #fff;
+  border: 1px solid #e6e7ef;
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 22px;
+}
+.cart h2 {
+  margin-top: 0;
+}
+.cart ul {
+  padding-left: 18px;
+  font-size: 13px;
+}
+.checkout {
+  margin: 10px 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.checkout.new {
+  background: #dcfce7;
+  color: #166534;
+}
+.checkout.classic {
+  background: #f1f5f9;
+  color: #475569;
+}
+.debug h3 {
+  margin: 0 0 10px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+.debug pre {
+  background: #f6f7fb;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 12px;
+  overflow: auto;
+}
+.debug table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.debug th,
+.debug td {
+  text-align: left;
+  padding: 5px 4px;
+  border-bottom: 1px solid #f0f1f6;
+  vertical-align: top;
+  word-break: break-word;
+}
+.debug td:first-child {
+  font-family: ui-monospace, Menlo, monospace;
+}
+tr.flash {
+  animation: flash 1.2s ease-out;
+}
+@keyframes flash {
+  from {
+    background: #fef9c3;
+  }
+  to {
+    background: transparent;
+  }
+}
+.muted {
+  color: #8a8fa6;
+  font-size: 12px;
+}
+.pill {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: #fef3c7;
+  color: #92400e;
+  font-weight: 600;
+}
+.pill.live {
+  background: #dcfce7;
+  color: #166534;
+}
+label {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+  margin: 10px 0;
+}
+input {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid #d9dbe7;
+  border-radius: 8px;
+}
+a {
+  color: #4f46e5;
+  font-size: 13px;
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@ffp/conformance",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Shared conformance test vectors and runner for the evaluator, SDKs and relay",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./vectors/*": "./vectors/*"
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
+  "files": [
+    "dist",
+    "vectors"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "vitest": "5.0.3"
+  }
+}

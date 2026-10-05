@@ -1,0 +1,10 @@
+export * from './types';
+export { evaluate, evaluateFlag, evaluateAll, createStore } from './evaluate';
+export type { AllFlagsOptions, FlagState } from './evaluate';
+export { murmurhash3, murmurhash3Bytes, utf8Bytes } from './murmurhash';
+export { bucketFor, bucketInput, BUCKET_COUNT } from './bucketing';
+export { parseSemver, compareSemver, semverCompare } from './semver';
+export type { SemVer } from './semver';
+export { isValidContext, contextOfKind, contextKinds, attributeValue, canonicalContextKey } from './context';
+export { compileRegex, MAX_REGEX_INPUT_LENGTH, MAX_REGEX_PATTERN_LENGTH } from './operators';
+export const EVALUATOR_VERSION = '0.1.0';

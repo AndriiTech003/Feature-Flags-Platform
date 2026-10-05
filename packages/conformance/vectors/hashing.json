@@ -1,0 +1,126 @@
+{
+  "name": "hashing",
+  "description": "murmurhash3_x86_32 seed 0 over UTF-8 bytes; bucket = hash % 100000. Expected values computed by the reference C implementation.",
+  "cases": [
+    {
+      "input": "",
+      "hash": 0,
+      "bucket": 0
+    },
+    {
+      "input": "a",
+      "hash": 1009084850,
+      "bucket": 84850
+    },
+    {
+      "input": "ab",
+      "hash": 2613040991,
+      "bucket": 40991
+    },
+    {
+      "input": "abc",
+      "hash": 3017643002,
+      "bucket": 43002
+    },
+    {
+      "input": "abcd",
+      "hash": 1139631978,
+      "bucket": 31978
+    },
+    {
+      "input": "abcde",
+      "hash": 3902511862,
+      "bucket": 11862
+    },
+    {
+      "input": "hello",
+      "hash": 613153351,
+      "bucket": 53351
+    },
+    {
+      "input": "The quick brown fox jumps over the lazy dog",
+      "hash": 776992547,
+      "bucket": 92547
+    },
+    {
+      "input": "new-checkout.3f9a.user-1",
+      "hash": 1303391025,
+      "bucket": 91025
+    },
+    {
+      "input": "new-checkout.3f9a.user-2",
+      "hash": 4189604825,
+      "bucket": 4825
+    },
+    {
+      "input": "banner-text.banner-salt.visitor-1",
+      "hash": 3641262000,
+      "bucket": 62000
+    },
+    {
+      "input": "Київ",
+      "hash": 1674314101,
+      "bucket": 14101
+    },
+    {
+      "input": "München",
+      "hash": 1269059171,
+      "bucket": 59171
+    },
+    {
+      "input": "München",
+      "hash": 296431944,
+      "bucket": 31944
+    },
+    {
+      "input": "東京都",
+      "hash": 3237294857,
+      "bucket": 94857
+    },
+    {
+      "input": "😀",
+      "hash": 3199479546,
+      "bucket": 79546
+    },
+    {
+      "input": "🙂-emoji",
+      "hash": 556124326,
+      "bucket": 24326
+    },
+    {
+      "input": "a😀b",
+      "hash": 3125043452,
+      "bucket": 43452
+    },
+    {
+      "input": "é",
+      "hash": 269551495,
+      "bucket": 51495
+    },
+    {
+      "input": "Ω",
+      "hash": 1328693105,
+      "bucket": 93105
+    },
+    {
+      "input": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "hash": 1897939982,
+      "bucket": 39982
+    },
+    {
+      "input": "ÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødéÜnïcødé",
+      "hash": 4189569170,
+      "bucket": 69170
+    },
+    {
+      "input": "tab\there",
+      "hash": 3602963094,
+      "bucket": 63094
+    },
+    {
+      "input": "flag.salt.用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户用户",
+      "hash": 1245281142,
+      "bucket": 81142
+    }
+  ]
+}

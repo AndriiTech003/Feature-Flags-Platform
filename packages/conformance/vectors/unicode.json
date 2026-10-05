@@ -1,0 +1,310 @@
+{
+  "name": "unicode",
+  "description": "Unicode attribute values and keys are compared and hashed as UTF-8",
+  "flags": [
+    {
+      "key": "uni",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-uni",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "city",
+            "clauses": [
+              {
+                "attribute": "city",
+                "op": "in",
+                "values": [
+                  "Київ",
+                  "München",
+                  "東京"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          },
+          {
+            "id": "emoji",
+            "clauses": [
+              {
+                "attribute": "nick",
+                "op": "contains",
+                "values": [
+                  "🚀"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          },
+          {
+            "id": "prefix",
+            "clauses": [
+              {
+                "attribute": "name",
+                "op": "starts_with",
+                "values": [
+                  "Ł"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          },
+          {
+            "id": "regex",
+            "clauses": [
+              {
+                "attribute": "title",
+                "op": "matches",
+                "values": [
+                  "^\\p{Lu}"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "uni-target",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-uni-target",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [
+          {
+            "variation": "on",
+            "keys": [
+              "Ünïcødé",
+              "😀"
+            ]
+          }
+        ],
+        "rules": [],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    }
+  ],
+  "segments": [],
+  "cases": [
+    {
+      "name": "cyrillic value in list",
+      "flagKey": "uni",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "city": "Київ"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "city"
+        }
+      }
+    },
+    {
+      "name": "german umlaut value in list",
+      "flagKey": "uni",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "city": "München"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "city"
+        }
+      }
+    },
+    {
+      "name": "decomposed umlaut is a different string",
+      "flagKey": "uni",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "city": "München"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "cjk value in list",
+      "flagKey": "uni",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "city": "東京"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "city"
+        }
+      }
+    },
+    {
+      "name": "emoji contains",
+      "flagKey": "uni",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "nick": "to the 🚀 moon"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 1,
+          "ruleId": "emoji"
+        }
+      }
+    },
+    {
+      "name": "non ascii starts_with",
+      "flagKey": "uni",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "name": "Łukasz"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 2,
+          "ruleId": "prefix"
+        }
+      }
+    },
+    {
+      "name": "unicode property regex",
+      "flagKey": "uni",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "title": "Ärger"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 3,
+          "ruleId": "regex"
+        }
+      }
+    },
+    {
+      "name": "unicode property regex negative",
+      "flagKey": "uni",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "title": "ärger"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "unicode target key",
+      "flagKey": "uni-target",
+      "context": {
+        "kind": "user",
+        "key": "Ünïcødé"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "TARGET_MATCH"
+        }
+      }
+    },
+    {
+      "name": "emoji target key",
+      "flagKey": "uni-target",
+      "context": {
+        "kind": "user",
+        "key": "😀"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "TARGET_MATCH"
+        }
+      }
+    }
+  ]
+}

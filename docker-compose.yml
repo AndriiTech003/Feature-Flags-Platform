@@ -1,0 +1,102 @@
+name: feature-flags-platform
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ffp
+      POSTGRES_PASSWORD: ffp
+      POSTGRES_DB: ffp
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ffp -d ffp']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      DATABASE_URL: postgres://ffp:ffp@postgres:5432/ffp
+      REDIS_URL: redis://redis:6379/2
+      API_HOST: 0.0.0.0
+      API_PORT: 4200
+      JWT_SECRET: ${JWT_SECRET:-docker-compose-demo-secret}
+      DASHBOARD_URL: http://localhost:4220
+    ports:
+      - '4200:4200'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://127.0.0.1:4200/health']
+      interval: 3s
+      timeout: 3s
+      retries: 40
+
+  relay:
+    build:
+      context: .
+      dockerfile: apps/relay/Dockerfile
+    environment:
+      DATABASE_URL: postgres://ffp:ffp@postgres:5432/ffp
+      REDIS_URL: redis://redis:6379/2
+      RELAY_HOST: 0.0.0.0
+      RELAY_PORT: 4210
+    ports:
+      - '4210:4210'
+    depends_on:
+      api:
+        condition: service_healthy
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: apps/dashboard/Dockerfile
+    environment:
+      API_URL: http://localhost:4200
+    ports:
+      - '4220:80'
+    depends_on:
+      - api
+
+  demo-shop:
+    build:
+      context: .
+      dockerfile: apps/demo-shop/Dockerfile
+    environment:
+      SHOP_HOST: 0.0.0.0
+      SHOP_PORT: 4230
+      RELAY_URL: http://relay:4210
+      PUBLIC_RELAY_URL: http://localhost:4210
+      FLAGS_SERVER_KEY: srv-demo-production
+      FLAGS_CLIENT_KEY: cli-demo-production
+    ports:
+      - '4230:4230'
+    depends_on:
+      - relay
+
+  traffic:
+    build:
+      context: .
+      dockerfile: apps/demo-shop/Dockerfile
+    command: ['node', 'dist/traffic.js', '--relay', 'http://relay:4210', '--users', '27000']
+    profiles: ['traffic']
+    depends_on:
+      - relay
+
+volumes:
+  pgdata:

@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-01T09:46:19.901Z",
+  "environment": {
+    "cpu": "Apple M1",
+    "cores": 8,
+    "memoryGb": 8,
+    "node": "v26.7.0",
+    "note": "API, relay, Postgres, Redis and the load generator share one machine"
+  },
+  "sse": {
+    "subscribers": 1000,
+    "maxConnectionsOpened": 3000,
+    "connectionError": null,
+    "relayRssMbBaseline": 85,
+    "relayRssMbWithSubscribers": 120,
+    "relayRssMbAtMax": 147,
+    "relayReportedConnectionsAtMax": 3000
+  },
+  "fanout": [
+    {
+      "round": 0,
+      "delivered": 1000,
+      "apiMs": 12.320584000000053,
+      "p50": 14.537082999999711,
+      "p95": 25.407207999999628,
+      "p99": 26.202999999999975,
+      "max": 26.381082999999762
+    },
+    {
+      "round": 1,
+      "delivered": 1000,
+      "apiMs": 5.56387500000028,
+      "p50": 12.378790999999637,
+      "p95": 19.51162499999964,
+      "p99": 20.163374999999633,
+      "max": 20.274540999999772
+    },
+    {
+      "round": 2,
+      "delivered": 1000,
+      "apiMs": 6.198959000000286,
+      "p50": 13.69854099999975,
+      "p95": 20.204083000000537,
+      "p99": 20.632249999999658,
+      "max": 20.713665999999648
+    },
+    {
+      "round": 3,
+      "delivered": 1000,
+      "apiMs": 5.15729199999987,
+      "p50": 9.191250000000764,
+      "p95": 14.359000000000378,
+      "p99": 14.875875000000633,
+      "max": 14.98450000000048
+    },
+    {
+      "round": 4,
+      "delivered": 1000,
+      "apiMs": 4.747208000000683,
+      "p50": 8.770249999999578,
+      "p95": 14.299791999999798,
+      "p99": 14.701583999999457,
+      "max": 14.799708999999893
+    }
+  ],
+  "evaluate": {
+    "seconds": 10,
+    "concurrency": 64,
+    "requests": 28588,
+    "rps": 2859,
+    "errors": 0,
+    "p50": 21.43354199999885,
+    "p95": 37.68358400000034,
+    "p99": 50.45983399999932
+  }
+}

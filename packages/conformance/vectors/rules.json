@@ -1,0 +1,424 @@
+{
+  "name": "rules",
+  "description": "Rule ordering, AND between clauses, OR within values, nested attributes, multi-context clauses",
+  "flags": [
+    {
+      "key": "rules",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-rules",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "pro-de",
+            "clauses": [
+              {
+                "attribute": "plan",
+                "op": "eq",
+                "values": [
+                  "pro"
+                ]
+              },
+              {
+                "attribute": "country",
+                "op": "in",
+                "values": [
+                  "DE",
+                  "AT"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          },
+          {
+            "id": "staff",
+            "clauses": [
+              {
+                "attribute": "email",
+                "op": "ends_with",
+                "values": [
+                  "@corp.io"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "off"
+            }
+          },
+          {
+            "id": "pro",
+            "clauses": [
+              {
+                "attribute": "plan",
+                "op": "eq",
+                "values": [
+                  "pro"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "off"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "nested",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-nested",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "n1",
+            "clauses": [
+              {
+                "attribute": "address.country",
+                "op": "eq",
+                "values": [
+                  "UA"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "org-rule",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-org-rule",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "enterprise",
+            "clauses": [
+              {
+                "attribute": "tier",
+                "contextKind": "organization",
+                "op": "eq",
+                "values": [
+                  "enterprise"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "empty-clauses",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-empty-clauses",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "all",
+            "clauses": [],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    }
+  ],
+  "segments": [],
+  "cases": [
+    {
+      "name": "all clauses match first rule",
+      "flagKey": "rules",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "plan": "pro",
+        "country": "AT"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "pro-de"
+        }
+      }
+    },
+    {
+      "name": "one clause fails falls to later rule",
+      "flagKey": "rules",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "plan": "pro",
+        "country": "US"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 2,
+          "ruleId": "pro"
+        }
+      }
+    },
+    {
+      "name": "first matching rule wins",
+      "flagKey": "rules",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "plan": "pro",
+        "email": "x@corp.io"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 1,
+          "ruleId": "staff"
+        }
+      }
+    },
+    {
+      "name": "no rule matches falls through",
+      "flagKey": "rules",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "plan": "free"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "rules in multi context use user attributes",
+      "flagKey": "rules",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "u",
+          "plan": "pro",
+          "country": "DE"
+        },
+        "organization": {
+          "key": "o"
+        }
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "pro-de"
+        }
+      }
+    },
+    {
+      "name": "nested attribute path matches",
+      "flagKey": "nested",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "address": {
+          "country": "UA",
+          "city": "Kyiv"
+        }
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "n1"
+        }
+      }
+    },
+    {
+      "name": "nested attribute path missing does not match",
+      "flagKey": "nested",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "address": "UA"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "literal dotted attribute name wins over path",
+      "flagKey": "nested",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "address.country": "UA"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "n1"
+        }
+      }
+    },
+    {
+      "name": "organization clause in multi context",
+      "flagKey": "org-rule",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "u",
+          "tier": "free"
+        },
+        "organization": {
+          "key": "acme",
+          "tier": "enterprise"
+        }
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "enterprise"
+        }
+      }
+    },
+    {
+      "name": "organization clause ignores user attribute with same name",
+      "flagKey": "org-rule",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "tier": "enterprise"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "rule with no clauses always matches",
+      "flagKey": "empty-clauses",
+      "context": {
+        "kind": "user",
+        "key": "anyone"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "all"
+        }
+      }
+    }
+  ]
+}

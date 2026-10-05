@@ -1,0 +1,80 @@
+{
+  "name": "@ashamrai/flags-evaluator",
+  "version": "0.0.0",
+  "description": "Pure, dependency-free, isomorphic feature flag evaluation core with deterministic murmurhash3 bucketing",
+  "license": "MIT",
+  "author": "Andrii Shamrai",
+  "type": "module",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashamrai/feature-flags-platform.git",
+    "directory": "packages/evaluator"
+  },
+  "keywords": [
+    "feature-flags",
+    "evaluator",
+    "murmurhash",
+    "bucketing",
+    "openfeature"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.cts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "test:browser": "vitest run -c vitest.browser.config.ts",
+    "bench": "tsx bench/run.ts",
+    "publint": "publint --strict",
+    "attw": "attw --pack . --profile node16",
+    "size": "size-limit"
+  },
+  "size-limit": [
+    {
+      "path": "dist/index.js",
+      "limit": "4 KB"
+    }
+  ],
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@ffp/conformance": "workspace:*",
+    "@size-limit/preset-small-lib": "^14.1.0",
+    "@vitest/browser-playwright": "5.0.3",
+    "@vitest/coverage-v8": "5.0.3",
+    "fast-check": "^4.10.2",
+    "playwright": "1.63.0",
+    "publint": "^0.3.24",
+    "size-limit": "^14.1.0",
+    "tinybench": "^6.2.0",
+    "tsup": "^8.5.1",
+    "tsx": "^4.23.15",
+    "vitest": "5.0.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

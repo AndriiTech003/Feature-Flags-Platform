@@ -1,0 +1,639 @@
+{
+  "name": "basics",
+  "description": "Flag on/off, missing flags, malformed flags, wrong types and invalid contexts",
+  "flags": [
+    {
+      "key": "off-flag",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-off-flag",
+      "config": {
+        "on": false,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "off-null",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-off-null",
+      "config": {
+        "on": false,
+        "offVariation": null,
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "on-flag",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-on-flag",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "bad-off",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-bad-off",
+      "config": {
+        "on": false,
+        "offVariation": "nope",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "bad-fall",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-bad-fall",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "nope"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "empty-rollout",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-empty-rollout",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "rollout": {
+            "weights": []
+          }
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "bad-serve",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-bad-serve",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {},
+        "version": 1
+      }
+    },
+    {
+      "key": "str-flag",
+      "kind": "string",
+      "salt": "s",
+      "variations": [
+        {
+          "id": "a",
+          "value": "alpha"
+        },
+        {
+          "id": "b",
+          "value": "beta"
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "a",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "b"
+        },
+        "version": 3
+      }
+    },
+    {
+      "key": "num-flag",
+      "kind": "number",
+      "salt": "s",
+      "variations": [
+        {
+          "id": "small",
+          "value": 10
+        },
+        {
+          "id": "big",
+          "value": 100
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "small",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "big"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "json-flag",
+      "kind": "json",
+      "salt": "s",
+      "variations": [
+        {
+          "id": "grid",
+          "value": {
+            "layout": "grid",
+            "columns": 3
+          }
+        },
+        {
+          "id": "list",
+          "value": {
+            "layout": "list"
+          }
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "list",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "grid"
+        },
+        "version": 1
+      }
+    }
+  ],
+  "segments": [],
+  "cases": [
+    {
+      "name": "off returns off variation",
+      "flagKey": "off-flag",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": true,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "OFF"
+        }
+      }
+    },
+    {
+      "name": "off with null off variation returns default",
+      "flagKey": "off-null",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": true,
+      "expect": {
+        "value": true,
+        "variationId": null,
+        "reason": {
+          "kind": "OFF"
+        }
+      }
+    },
+    {
+      "name": "on returns fallthrough",
+      "flagKey": "on-flag",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": false,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "unknown flag returns default",
+      "flagKey": "missing",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": "dflt",
+      "expect": {
+        "value": "dflt",
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "FLAG_NOT_FOUND"
+        }
+      }
+    },
+    {
+      "name": "off variation not in variations is malformed",
+      "flagKey": "bad-off",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "MALFORMED_FLAG"
+        }
+      }
+    },
+    {
+      "name": "fallthrough variation not in variations is malformed",
+      "flagKey": "bad-fall",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "MALFORMED_FLAG"
+        }
+      }
+    },
+    {
+      "name": "empty rollout is malformed",
+      "flagKey": "empty-rollout",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "MALFORMED_FLAG"
+        }
+      }
+    },
+    {
+      "name": "serve without variation or rollout is malformed",
+      "flagKey": "bad-serve",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "MALFORMED_FLAG"
+        }
+      }
+    },
+    {
+      "name": "string flag returns string",
+      "flagKey": "str-flag",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": "x",
+      "expectedKind": "string",
+      "expect": {
+        "value": "beta",
+        "variationId": "b",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "string flag requested as boolean is wrong type",
+      "flagKey": "str-flag",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": false,
+      "expectedKind": "boolean",
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "WRONG_TYPE"
+        }
+      }
+    },
+    {
+      "name": "number flag returns number",
+      "flagKey": "num-flag",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": 0,
+      "expectedKind": "number",
+      "expect": {
+        "value": 100,
+        "variationId": "big",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "number flag requested as string is wrong type",
+      "flagKey": "num-flag",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": "x",
+      "expectedKind": "string",
+      "expect": {
+        "value": "x",
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "WRONG_TYPE"
+        }
+      }
+    },
+    {
+      "name": "boolean flag requested as number is wrong type",
+      "flagKey": "on-flag",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": 7,
+      "expectedKind": "number",
+      "expect": {
+        "value": 7,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "WRONG_TYPE"
+        }
+      }
+    },
+    {
+      "name": "json flag returns object",
+      "flagKey": "json-flag",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": null,
+      "expectedKind": "json",
+      "expect": {
+        "value": {
+          "layout": "grid",
+          "columns": 3
+        },
+        "variationId": "grid",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "context without kind is treated as user",
+      "flagKey": "on-flag",
+      "context": {
+        "key": "u1"
+      },
+      "default": false,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "context without key is invalid",
+      "flagKey": "on-flag",
+      "context": {
+        "kind": "user",
+        "name": "x"
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "INVALID_CONTEXT"
+        }
+      }
+    },
+    {
+      "name": "context with empty key is invalid",
+      "flagKey": "on-flag",
+      "context": {
+        "kind": "user",
+        "key": ""
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "INVALID_CONTEXT"
+        }
+      }
+    },
+    {
+      "name": "context with numeric key is invalid",
+      "flagKey": "on-flag",
+      "context": {
+        "kind": "user",
+        "key": 42
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "INVALID_CONTEXT"
+        }
+      }
+    },
+    {
+      "name": "multi context without kinds is invalid",
+      "flagKey": "on-flag",
+      "context": {
+        "kind": "multi"
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "INVALID_CONTEXT"
+        }
+      }
+    },
+    {
+      "name": "multi context with invalid nested context is invalid",
+      "flagKey": "on-flag",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "name": "no-key"
+        }
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "INVALID_CONTEXT"
+        }
+      }
+    },
+    {
+      "name": "context kind with illegal characters is invalid",
+      "flagKey": "on-flag",
+      "context": {
+        "kind": "us er",
+        "key": "u1"
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "INVALID_CONTEXT"
+        }
+      }
+    },
+    {
+      "name": "off flag with a non user context returns off variation",
+      "flagKey": "off-flag",
+      "context": {
+        "kind": "device",
+        "key": "d1"
+      },
+      "default": true,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "OFF"
+        }
+      }
+    }
+  ]
+}

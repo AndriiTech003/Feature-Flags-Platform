@@ -1,0 +1,13 @@
+dist
+coverage
+pnpm-lock.yaml
+packages/conformance/vectors
+.changeset/*.md
+docs
+.smoke
+playwright-report
+test-results
+apps/dashboard/dist-*
+**/public/build
+pnpm-lock.yaml
+README.md

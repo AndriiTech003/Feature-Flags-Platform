@@ -1,0 +1,348 @@
+{
+  "name": "targets",
+  "description": "Individual targeting by context kind",
+  "flags": [
+    {
+      "key": "targeted",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-targeted",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [
+          {
+            "variation": "on",
+            "contextKind": "user",
+            "keys": [
+              "alice",
+              "bob"
+            ]
+          },
+          {
+            "variation": "off",
+            "contextKind": "organization",
+            "keys": [
+              "acme"
+            ]
+          },
+          {
+            "variation": "on",
+            "contextKind": "organization",
+            "keys": [
+              "acme",
+              "globex"
+            ]
+          }
+        ],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "key",
+                "op": "eq",
+                "values": [
+                  "alice",
+                  "carol"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "off"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "targeted-off",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-targeted-off",
+      "config": {
+        "on": false,
+        "offVariation": "off",
+        "targets": [
+          {
+            "variation": "on",
+            "keys": [
+              "alice"
+            ]
+          }
+        ],
+        "rules": [],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "default-kind",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-default-kind",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [
+          {
+            "variation": "on",
+            "keys": [
+              "dev-1"
+            ]
+          }
+        ],
+        "rules": [],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    }
+  ],
+  "segments": [],
+  "cases": [
+    {
+      "name": "user key in targets",
+      "flagKey": "targeted",
+      "context": {
+        "kind": "user",
+        "key": "alice"
+      },
+      "default": false,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "TARGET_MATCH"
+        }
+      }
+    },
+    {
+      "name": "second user key in targets",
+      "flagKey": "targeted",
+      "context": {
+        "kind": "user",
+        "key": "bob"
+      },
+      "default": false,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "TARGET_MATCH"
+        }
+      }
+    },
+    {
+      "name": "targets take precedence over rules",
+      "flagKey": "targeted",
+      "context": {
+        "kind": "user",
+        "key": "alice"
+      },
+      "default": false,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "TARGET_MATCH"
+        }
+      }
+    },
+    {
+      "name": "non targeted user hits rule",
+      "flagKey": "targeted",
+      "context": {
+        "kind": "user",
+        "key": "carol"
+      },
+      "default": true,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "non targeted user falls through",
+      "flagKey": "targeted",
+      "context": {
+        "kind": "user",
+        "key": "dave"
+      },
+      "default": true,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "organization target in multi context, first target wins",
+      "flagKey": "targeted",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "zed"
+        },
+        "organization": {
+          "key": "acme"
+        }
+      },
+      "default": true,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "TARGET_MATCH"
+        }
+      }
+    },
+    {
+      "name": "organization target second list",
+      "flagKey": "targeted",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "zed"
+        },
+        "organization": {
+          "key": "globex"
+        }
+      },
+      "default": false,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "TARGET_MATCH"
+        }
+      }
+    },
+    {
+      "name": "user target matched inside multi context",
+      "flagKey": "targeted",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "bob"
+        },
+        "organization": {
+          "key": "acme"
+        }
+      },
+      "default": false,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "TARGET_MATCH"
+        }
+      }
+    },
+    {
+      "name": "organization single context targeted",
+      "flagKey": "targeted",
+      "context": {
+        "kind": "organization",
+        "key": "globex"
+      },
+      "default": false,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "TARGET_MATCH"
+        }
+      }
+    },
+    {
+      "name": "targets ignored when flag is off",
+      "flagKey": "targeted-off",
+      "context": {
+        "kind": "user",
+        "key": "alice"
+      },
+      "default": true,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "OFF"
+        }
+      }
+    },
+    {
+      "name": "target without contextKind defaults to user",
+      "flagKey": "default-kind",
+      "context": {
+        "kind": "user",
+        "key": "dev-1"
+      },
+      "default": false,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "TARGET_MATCH"
+        }
+      }
+    },
+    {
+      "name": "target without contextKind does not match device kind",
+      "flagKey": "default-kind",
+      "context": {
+        "kind": "device",
+        "key": "dev-1"
+      },
+      "default": true,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    }
+  ]
+}

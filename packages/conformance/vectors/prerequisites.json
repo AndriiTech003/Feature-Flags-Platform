@@ -1,0 +1,619 @@
+{
+  "name": "prerequisites",
+  "description": "Prerequisite chains, failures and cycle detection",
+  "flags": [
+    {
+      "key": "parent",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-parent",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "parent-off",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-parent-off",
+      "config": {
+        "on": false,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "child",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-child",
+      "prerequisites": [
+        {
+          "flagKey": "parent",
+          "variationId": "on"
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "child-wrong",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-child-wrong",
+      "prerequisites": [
+        {
+          "flagKey": "parent",
+          "variationId": "off"
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "child-of-off",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-child-of-off",
+      "prerequisites": [
+        {
+          "flagKey": "parent-off",
+          "variationId": "off"
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "child-missing",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-child-missing",
+      "prerequisites": [
+        {
+          "flagKey": "ghost",
+          "variationId": "on"
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "grandchild",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-grandchild",
+      "prerequisites": [
+        {
+          "flagKey": "child",
+          "variationId": "on"
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "targeted-parent",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-targeted-parent",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [
+          {
+            "variation": "on",
+            "keys": [
+              "vip"
+            ]
+          }
+        ],
+        "rules": [],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "child-of-targeted",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-child-of-targeted",
+      "prerequisites": [
+        {
+          "flagKey": "targeted-parent",
+          "variationId": "on"
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "cycle-a",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-cycle-a",
+      "prerequisites": [
+        {
+          "flagKey": "cycle-b",
+          "variationId": "on"
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "cycle-b",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-cycle-b",
+      "prerequisites": [
+        {
+          "flagKey": "cycle-a",
+          "variationId": "on"
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "self-cycle",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-self-cycle",
+      "prerequisites": [
+        {
+          "flagKey": "self-cycle",
+          "variationId": "on"
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "child-off",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-child-off",
+      "prerequisites": [
+        {
+          "flagKey": "cycle-a",
+          "variationId": "on"
+        }
+      ],
+      "config": {
+        "on": false,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "multi-prereq",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-multi-prereq",
+      "prerequisites": [
+        {
+          "flagKey": "parent",
+          "variationId": "on"
+        },
+        {
+          "flagKey": "parent-off",
+          "variationId": "off"
+        }
+      ],
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [],
+        "fallthrough": {
+          "variation": "on"
+        },
+        "version": 1
+      }
+    }
+  ],
+  "segments": [],
+  "cases": [
+    {
+      "name": "prerequisite satisfied",
+      "flagKey": "child",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "prerequisite with different variation fails",
+      "flagKey": "child-wrong",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "PREREQUISITE_FAILED",
+          "prerequisiteKey": "parent"
+        }
+      }
+    },
+    {
+      "name": "prerequisite that is off fails even if variation matches",
+      "flagKey": "child-of-off",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "PREREQUISITE_FAILED",
+          "prerequisiteKey": "parent-off"
+        }
+      }
+    },
+    {
+      "name": "missing prerequisite fails",
+      "flagKey": "child-missing",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "PREREQUISITE_FAILED",
+          "prerequisiteKey": "ghost"
+        }
+      }
+    },
+    {
+      "name": "chain of prerequisites satisfied",
+      "flagKey": "grandchild",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "prerequisite evaluated per context, targeted",
+      "flagKey": "child-of-targeted",
+      "context": {
+        "kind": "user",
+        "key": "vip"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "prerequisite evaluated per context, not targeted",
+      "flagKey": "child-of-targeted",
+      "context": {
+        "kind": "user",
+        "key": "regular"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "PREREQUISITE_FAILED",
+          "prerequisiteKey": "targeted-parent"
+        }
+      }
+    },
+    {
+      "name": "two flag cycle is malformed",
+      "flagKey": "cycle-a",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "MALFORMED_FLAG"
+        }
+      }
+    },
+    {
+      "name": "self cycle is malformed",
+      "flagKey": "self-cycle",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "MALFORMED_FLAG"
+        }
+      }
+    },
+    {
+      "name": "prerequisites are not evaluated when flag is off",
+      "flagKey": "child-off",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "OFF"
+        }
+      }
+    },
+    {
+      "name": "second prerequisite failing reports its key",
+      "flagKey": "multi-prereq",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "PREREQUISITE_FAILED",
+          "prerequisiteKey": "parent-off"
+        }
+      }
+    }
+  ]
+}

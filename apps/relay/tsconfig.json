@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "declaration": false,
+    "experimentalDecorators": true
+  },
+  "include": ["src", "test", "*.config.ts"]
+}

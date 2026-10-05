@@ -1,0 +1,2390 @@
+{
+  "name": "operators",
+  "description": "Every clause operator, type mismatches, negation, regex safety limits",
+  "flags": [
+    {
+      "key": "op-in",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-in",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "country",
+                "op": "in",
+                "values": [
+                  "DE",
+                  "FR"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-in-num",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-in-num",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "age",
+                "op": "in",
+                "values": [
+                  18,
+                  21
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-in-bool",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-in-bool",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "beta",
+                "op": "in",
+                "values": [
+                  true
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-not-in",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-not-in",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "country",
+                "op": "not_in",
+                "values": [
+                  "DE",
+                  "FR"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-eq",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-eq",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "plan",
+                "op": "eq",
+                "values": [
+                  "pro"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-neq",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-neq",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "plan",
+                "op": "neq",
+                "values": [
+                  "free"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-contains",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-contains",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "email",
+                "op": "contains",
+                "values": [
+                  "@acme."
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-starts",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-starts",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "email",
+                "op": "starts_with",
+                "values": [
+                  "admin",
+                  "root"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-ends",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-ends",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "email",
+                "op": "ends_with",
+                "values": [
+                  "@acme.io"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-matches",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-matches",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "email",
+                "op": "matches",
+                "values": [
+                  "^[a-z]+@acme\\.(io|com)$"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-matches-invalid",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-matches-invalid",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "name",
+                "op": "matches",
+                "values": [
+                  "([a-z"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-matches-redos",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-matches-redos",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "name",
+                "op": "matches",
+                "values": [
+                  "^(a+)+$"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-matches-long",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-matches-long",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "name",
+                "op": "matches",
+                "values": [
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-matches-input",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-matches-input",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "name",
+                "op": "matches",
+                "values": [
+                  "a"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-lt",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-lt",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "age",
+                "op": "lt",
+                "values": [
+                  18
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-lte",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-lte",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "age",
+                "op": "lte",
+                "values": [
+                  18
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-gt",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-gt",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "cartTotal",
+                "op": "gt",
+                "values": [
+                  99.99
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-gte",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-gte",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "cartTotal",
+                "op": "gte",
+                "values": [
+                  100
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-semver-eq",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-semver-eq",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "appVersion",
+                "op": "semver_eq",
+                "values": [
+                  "2.1.0"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-semver-lt",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-semver-lt",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "appVersion",
+                "op": "semver_lt",
+                "values": [
+                  "2.0.0"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-semver-gt",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-semver-gt",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "appVersion",
+                "op": "semver_gt",
+                "values": [
+                  "1.0.0-alpha.1"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-before",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-before",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "createdAt",
+                "op": "before",
+                "values": [
+                  "2025-01-01T00:00:00Z"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-after",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-after",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "createdAt",
+                "op": "after",
+                "values": [
+                  1735689600000
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-negate",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-negate",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "country",
+                "op": "in",
+                "values": [
+                  "DE"
+                ],
+                "negate": true
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-key",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-key",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "key",
+                "op": "starts_with",
+                "values": [
+                  "qa-"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "op-kind",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-op-kind",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "r1",
+            "clauses": [
+              {
+                "attribute": "kind",
+                "contextKind": "device",
+                "op": "eq",
+                "values": [
+                  "device"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    }
+  ],
+  "segments": [],
+  "cases": [
+    {
+      "name": "in matches first value",
+      "flagKey": "op-in",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "country": "DE"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "in matches second value",
+      "flagKey": "op-in",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "country": "FR"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "in does not match other value",
+      "flagKey": "op-in",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "country": "US"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "in is case sensitive",
+      "flagKey": "op-in",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "country": "de"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "in with missing attribute does not match",
+      "flagKey": "op-in",
+      "context": {
+        "kind": "user",
+        "key": "u"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "in with null attribute does not match",
+      "flagKey": "op-in",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "country": null
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "in matches any element of array attribute",
+      "flagKey": "op-in",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "country": [
+          "US",
+          "FR"
+        ]
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "in with array attribute without match",
+      "flagKey": "op-in",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "country": [
+          "US",
+          "PL"
+        ]
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "in matches number",
+      "flagKey": "op-in-num",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "age": 21
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "in does not coerce string to number",
+      "flagKey": "op-in-num",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "age": "21"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "in matches boolean",
+      "flagKey": "op-in-bool",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "beta": true
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "in boolean mismatch",
+      "flagKey": "op-in-bool",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "beta": false
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "not_in matches other value",
+      "flagKey": "op-not-in",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "country": "US"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "not_in does not match listed value",
+      "flagKey": "op-not-in",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "country": "DE"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "not_in with missing attribute does not match",
+      "flagKey": "op-not-in",
+      "context": {
+        "kind": "user",
+        "key": "u"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "not_in with array attribute containing listed value",
+      "flagKey": "op-not-in",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "country": [
+          "US",
+          "DE"
+        ]
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "eq matches",
+      "flagKey": "op-eq",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "plan": "pro"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "eq does not match",
+      "flagKey": "op-eq",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "plan": "free"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "eq does not match object attribute",
+      "flagKey": "op-eq",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "plan": {
+          "name": "pro"
+        }
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "neq matches different value",
+      "flagKey": "op-neq",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "plan": "pro"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "neq does not match equal value",
+      "flagKey": "op-neq",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "plan": "free"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "neq with missing attribute does not match",
+      "flagKey": "op-neq",
+      "context": {
+        "kind": "user",
+        "key": "u"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "contains matches",
+      "flagKey": "op-contains",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "email": "jane@acme.io"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "contains does not match",
+      "flagKey": "op-contains",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "email": "jane@globex.io"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "contains on number attribute does not match",
+      "flagKey": "op-contains",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "email": 12345
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "starts_with matches",
+      "flagKey": "op-starts",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "email": "root@x.io"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "starts_with does not match",
+      "flagKey": "op-starts",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "email": "user@x.io"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "ends_with matches",
+      "flagKey": "op-ends",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "email": "jane@acme.io"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "ends_with does not match",
+      "flagKey": "op-ends",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "email": "jane@acme.io.evil"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "matches regex",
+      "flagKey": "op-matches",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "email": "jane@acme.com"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "regex does not match",
+      "flagKey": "op-matches",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "email": "Jane@acme.com"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "regex on non string does not match",
+      "flagKey": "op-matches",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "email": true
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "invalid regex never matches",
+      "flagKey": "op-matches-invalid",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "name": "abc"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "nested quantifier pattern is rejected",
+      "flagKey": "op-matches-redos",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "name": "aaaa"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "pattern longer than limit is rejected",
+      "flagKey": "op-matches-long",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "input longer than limit is rejected",
+      "flagKey": "op-matches-input",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "short input matches",
+      "flagKey": "op-matches-input",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "name": "cat"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "lt matches",
+      "flagKey": "op-lt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "age": 17
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "lt boundary does not match",
+      "flagKey": "op-lt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "age": 18
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "lt with string number does not match",
+      "flagKey": "op-lt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "age": "10"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "lte boundary matches",
+      "flagKey": "op-lte",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "age": 18
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "lte above does not match",
+      "flagKey": "op-lte",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "age": 18.5
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "gt matches float",
+      "flagKey": "op-gt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "cartTotal": 100
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "gt boundary does not match",
+      "flagKey": "op-gt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "cartTotal": 99.99
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "gte boundary matches",
+      "flagKey": "op-gte",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "cartTotal": 100
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "gte below does not match",
+      "flagKey": "op-gte",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "cartTotal": -1
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "semver_eq matches",
+      "flagKey": "op-semver-eq",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "2.1.0"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "semver_eq zero fills missing patch",
+      "flagKey": "op-semver-eq",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "2.1"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "semver_eq ignores build metadata",
+      "flagKey": "op-semver-eq",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "2.1.0+build.7"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "semver_eq prerelease is not equal to release",
+      "flagKey": "op-semver-eq",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "2.1.0-beta"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "semver_eq invalid version does not match",
+      "flagKey": "op-semver-eq",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "two"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "semver_lt matches",
+      "flagKey": "op-semver-lt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "1.10.3"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "semver_lt prerelease is lower than release",
+      "flagKey": "op-semver-lt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "2.0.0-rc.1"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "semver_lt compares numerically not lexically",
+      "flagKey": "op-semver-lt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "10.0.0"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "semver_lt equal does not match",
+      "flagKey": "op-semver-lt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "2.0.0"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "semver_gt numeric prerelease ordering",
+      "flagKey": "op-semver-gt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "1.0.0-alpha.2"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "semver_gt alphanumeric beats numeric identifier",
+      "flagKey": "op-semver-gt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "1.0.0-alpha.beta"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "semver_gt shorter prerelease is lower",
+      "flagKey": "op-semver-gt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "1.0.0-alpha"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "semver_gt release beats prerelease",
+      "flagKey": "op-semver-gt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "1.0.0"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "semver_gt leading zero is invalid",
+      "flagKey": "op-semver-gt",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "appVersion": "01.0.0"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "before matches iso string",
+      "flagKey": "op-before",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "createdAt": "2024-06-01T12:00:00Z"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "before matches unix millis",
+      "flagKey": "op-before",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "createdAt": 1700000000000
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "before does not match later date",
+      "flagKey": "op-before",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "createdAt": "2025-06-01T00:00:00+02:00"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "before with unparsable date does not match",
+      "flagKey": "op-before",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "createdAt": "yesterday"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "after matches iso string against millis",
+      "flagKey": "op-after",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "createdAt": "2025-03-01T00:00:00.500Z"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "after does not match equal instant",
+      "flagKey": "op-after",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "createdAt": "2025-01-01T00:00:00Z"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "after date-only string",
+      "flagKey": "op-after",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "createdAt": "2026-01-01"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "negated in matches other value",
+      "flagKey": "op-negate",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "country": "US"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "negated in does not match listed value",
+      "flagKey": "op-negate",
+      "context": {
+        "kind": "user",
+        "key": "u",
+        "country": "DE"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "negated clause with missing attribute still does not match",
+      "flagKey": "op-negate",
+      "context": {
+        "kind": "user",
+        "key": "u"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "key attribute is addressable",
+      "flagKey": "op-key",
+      "context": {
+        "kind": "user",
+        "key": "qa-17"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "kind attribute is addressable",
+      "flagKey": "op-kind",
+      "context": {
+        "kind": "device",
+        "key": "d1"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "r1"
+        }
+      }
+    },
+    {
+      "name": "clause context kind missing from context does not match",
+      "flagKey": "op-kind",
+      "context": {
+        "kind": "user",
+        "key": "u1"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    }
+  ]
+}

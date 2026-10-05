@@ -1,0 +1,525 @@
+{
+  "name": "segments",
+  "description": "Segment inclusion, exclusion, rules, nesting and cycles",
+  "flags": [
+    {
+      "key": "seg-flag",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-seg-flag",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "beta",
+            "clauses": [
+              {
+                "attribute": "segment",
+                "op": "segment_match",
+                "values": [
+                  "beta-testers",
+                  "missing-seg"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "seg-negated",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-seg-negated",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "not-internal",
+            "clauses": [
+              {
+                "attribute": "segment",
+                "op": "segment_match",
+                "values": [
+                  "internal"
+                ],
+                "negate": true
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "seg-nested",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-seg-nested",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "nested",
+            "clauses": [
+              {
+                "attribute": "segment",
+                "op": "segment_match",
+                "values": [
+                  "wrapper"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "seg-cycle",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-seg-cycle",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "cycle",
+            "clauses": [
+              {
+                "attribute": "segment",
+                "op": "segment_match",
+                "values": [
+                  "loop-a"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    },
+    {
+      "key": "seg-org",
+      "kind": "boolean",
+      "variations": [
+        {
+          "id": "on",
+          "value": true
+        },
+        {
+          "id": "off",
+          "value": false
+        }
+      ],
+      "salt": "salt-seg-org",
+      "config": {
+        "on": true,
+        "offVariation": "off",
+        "targets": [],
+        "rules": [
+          {
+            "id": "orgs",
+            "clauses": [
+              {
+                "attribute": "segment",
+                "op": "segment_match",
+                "values": [
+                  "key-accounts"
+                ]
+              }
+            ],
+            "serve": {
+              "variation": "on"
+            }
+          }
+        ],
+        "fallthrough": {
+          "variation": "off"
+        },
+        "version": 1
+      }
+    }
+  ],
+  "segments": [
+    {
+      "key": "beta-testers",
+      "included": [
+        "alice"
+      ],
+      "excluded": [
+        "mallory"
+      ],
+      "rules": [
+        {
+          "clauses": [
+            {
+              "attribute": "email",
+              "op": "ends_with",
+              "values": [
+                "@acme.io"
+              ]
+            }
+          ]
+        },
+        {
+          "clauses": [
+            {
+              "attribute": "beta",
+              "op": "eq",
+              "values": [
+                true
+              ]
+            }
+          ]
+        }
+      ],
+      "version": 1
+    },
+    {
+      "key": "internal",
+      "included": [
+        "ops-1"
+      ],
+      "excluded": [],
+      "rules": [],
+      "version": 1
+    },
+    {
+      "key": "wrapper",
+      "included": [],
+      "excluded": [],
+      "rules": [
+        {
+          "clauses": [
+            {
+              "attribute": "segment",
+              "op": "segment_match",
+              "values": [
+                "internal"
+              ]
+            }
+          ]
+        }
+      ],
+      "version": 1
+    },
+    {
+      "key": "loop-a",
+      "included": [],
+      "excluded": [],
+      "rules": [
+        {
+          "clauses": [
+            {
+              "attribute": "segment",
+              "op": "segment_match",
+              "values": [
+                "loop-b"
+              ]
+            }
+          ]
+        }
+      ],
+      "version": 1
+    },
+    {
+      "key": "loop-b",
+      "included": [],
+      "excluded": [],
+      "rules": [
+        {
+          "clauses": [
+            {
+              "attribute": "segment",
+              "op": "segment_match",
+              "values": [
+                "loop-a"
+              ]
+            }
+          ]
+        }
+      ],
+      "version": 1
+    },
+    {
+      "key": "key-accounts",
+      "contextKind": "organization",
+      "included": [
+        "acme"
+      ],
+      "excluded": [],
+      "rules": [],
+      "version": 1
+    }
+  ],
+  "cases": [
+    {
+      "name": "included key matches segment",
+      "flagKey": "seg-flag",
+      "context": {
+        "kind": "user",
+        "key": "alice"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "beta"
+        }
+      }
+    },
+    {
+      "name": "segment rule matches by attribute",
+      "flagKey": "seg-flag",
+      "context": {
+        "kind": "user",
+        "key": "bob",
+        "email": "bob@acme.io"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "beta"
+        }
+      }
+    },
+    {
+      "name": "second segment rule is OR",
+      "flagKey": "seg-flag",
+      "context": {
+        "kind": "user",
+        "key": "bob",
+        "beta": true
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "beta"
+        }
+      }
+    },
+    {
+      "name": "excluded key beats segment rules",
+      "flagKey": "seg-flag",
+      "context": {
+        "kind": "user",
+        "key": "mallory",
+        "email": "m@acme.io"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "context not in segment",
+      "flagKey": "seg-flag",
+      "context": {
+        "kind": "user",
+        "key": "carol",
+        "email": "c@other.io"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "negated segment match",
+      "flagKey": "seg-negated",
+      "context": {
+        "kind": "user",
+        "key": "carol"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "not-internal"
+        }
+      }
+    },
+    {
+      "name": "negated segment match for member",
+      "flagKey": "seg-negated",
+      "context": {
+        "kind": "user",
+        "key": "ops-1"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    },
+    {
+      "name": "segment referencing another segment",
+      "flagKey": "seg-nested",
+      "context": {
+        "kind": "user",
+        "key": "ops-1"
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "nested"
+        }
+      }
+    },
+    {
+      "name": "segment cycle is malformed",
+      "flagKey": "seg-cycle",
+      "context": {
+        "kind": "user",
+        "key": "anyone"
+      },
+      "default": false,
+      "expect": {
+        "value": false,
+        "variationId": null,
+        "reason": {
+          "kind": "ERROR",
+          "errorKind": "MALFORMED_FLAG"
+        }
+      }
+    },
+    {
+      "name": "organization segment matches multi context",
+      "flagKey": "seg-org",
+      "context": {
+        "kind": "multi",
+        "user": {
+          "key": "u1"
+        },
+        "organization": {
+          "key": "acme"
+        }
+      },
+      "default": null,
+      "expect": {
+        "value": true,
+        "variationId": "on",
+        "reason": {
+          "kind": "RULE_MATCH",
+          "ruleIndex": 0,
+          "ruleId": "orgs"
+        }
+      }
+    },
+    {
+      "name": "organization segment ignores user with same key",
+      "flagKey": "seg-org",
+      "context": {
+        "kind": "user",
+        "key": "acme"
+      },
+      "default": null,
+      "expect": {
+        "value": false,
+        "variationId": "off",
+        "reason": {
+          "kind": "FALLTHROUGH"
+        }
+      }
+    }
+  ]
+}

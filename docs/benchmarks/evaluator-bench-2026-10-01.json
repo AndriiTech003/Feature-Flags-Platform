@@ -1,0 +1,50 @@
+{
+  "environment": {
+    "cpu": "Apple M1",
+    "node": "v26.7.0",
+    "platform": "darwin-arm64",
+    "date": "2026-10-01T10:06:39.936Z"
+  },
+  "rows": [
+    {
+      "case": "boolean flag, off",
+      "meanUs": 0.135,
+      "p99Us": 0.208,
+      "opsPerSec": 8150543,
+      "targetUs": 0.3,
+      "ok": true
+    },
+    {
+      "case": "5 rules x 3 clauses, match in last",
+      "meanUs": 0.703,
+      "p99Us": 0.875,
+      "opsPerSec": 1577090,
+      "targetUs": 5,
+      "ok": true
+    },
+    {
+      "case": "rollout 50/50 (murmurhash)",
+      "meanUs": 0.451,
+      "p99Us": 0.709,
+      "opsPerSec": 2480916,
+      "targetUs": 1,
+      "ok": true
+    },
+    {
+      "case": "segment with 1000 included keys",
+      "meanUs": 0.186,
+      "p99Us": 0.25,
+      "opsPerSec": 5616632,
+      "targetUs": 1,
+      "ok": true
+    },
+    {
+      "case": "regex clause",
+      "meanUs": 0.223,
+      "p99Us": 0.291,
+      "opsPerSec": 5075314,
+      "targetUs": 3,
+      "ok": true
+    }
+  ]
+}
